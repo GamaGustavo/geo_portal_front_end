@@ -1,0 +1,48 @@
+/*
+ *<section className={style.corpo}>
+            <section className={style.barraLateral}>
+                <h1>{mapa?.nome}</h1>
+                <p></p>
+                <hr />
+                <h1>Links e Documentos</h1>
+                <ul>
+                    <li>documpento</li>
+                    <li>documpento</li>
+                    <li>documpento</li>      
+                </ul>    
+            </section>
+            <section className={style.viewMapa}>
+                <div className={style.pontoTempo}>
+                </div>
+                <div id='map' className='map'></div>
+            </section>
+
+ * */
+.corpo{
+    widows: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+}
+.barraLateral{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    width: 240px;
+    
+}
+.viewMapa{
+    width: 100%;
+    height: 100%;
+}
+.pontoTempo{
+    height: 5%;
+    
+}
+
+.map{
+    height: 95%;
+    width: 100%;  /* Ajuste conforme necessário */
+    border: 1px solid #ccc;
+   }

@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-wrap: wrap; /* Permite quebra de linha quando o limite de largura é atingido */
+  gap: 16px; /* Espaço entre os elementos */
+  padding-inline: 172px;
+}
+
+.card {
+  width: 170px; /* Largura fixa dos quadrados */
+  border: 1px solid #d3d3d3; /* Borda cinza clara e fina */
+  padding: 16px;
+  text-align: center;
+  box-sizing: border-box;
+  border-radius: 8px; /* Canto levemente arredondado */
+}
+
+.image {
+  width: 100%; /* Faz a imagem ocupar toda a largura do quadrado */
+  height: auto; /* Mantém a proporção da imagem */
+  margin-bottom: 8px;
+}
+
+.name {
+  font-size: 20px;
+  color: #333;
+}
+
