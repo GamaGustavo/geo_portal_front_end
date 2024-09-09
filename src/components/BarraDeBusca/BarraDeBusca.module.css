@@ -13,5 +13,16 @@
 .form{
     padding-inline: 172px;
     padding-block: 85px 40px;
+    display: flex;
 
+}
+.pesquisar{
+    margin-left: 12px;
+    background-color: #63a4ec;
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+}
+.pesquisar:hover{
+    border: 1px solid black;
 }
