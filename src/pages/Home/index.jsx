@@ -11,7 +11,7 @@ function Home(){
     return(
      <>
          <NavBar/>
-         <BarraDeBusca onSubmit={onSubmitHendler} onChange={onChangeHendler}></BarraDeBusca>
+         <BarraDeBusca onSubmit={onSubmitHendler} onChange={onChangeHendler}/>
          <ListaDeMapas/>
      </>);
 }
