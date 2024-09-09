@@ -35,7 +35,7 @@
     margin-left: 32px;
     border-radius: 5px;
 }
-button{
+.formulario button{
     font-size: 1.25rem;
     font-weight: bold;
     padding: 0.25rem;
@@ -44,12 +44,12 @@ button{
     background-color: white;
     border-radius: 5px;
 }
-button:hover{
+.formulario button:hover{
     color: white;
     background-color: red;
     border: 1px solid red;
 }
-input[type=submit]:hover{
+.formulario input[type=submit]:hover{
     color:white ;
     background-color: green;
     border: 1px solid green;
