@@ -3,15 +3,13 @@ import style from './Mapa.module.css';
 import 'ol/ol.css';
 import { useEffect } from 'react';
 import TileLayer from 'ol/layer/Tile';
-import { OSM, TileWMS } from 'ol/source';
+import { OSM } from 'ol/source';
 import { Map, View } from 'ol';
 import { fromLonLat } from 'ol/proj';
 import VectorSource from 'ol/source/Vector';
 import { GeoJSON } from 'ol/format';
-import { bbox as bboxStrategy } from 'ol/loadingstrategy';
 import { Style, Stroke, Fill } from 'ol/style';
 import VectorLayer from 'ol/layer/Vector';
-import {format} from 'ol/coordinate';
 
 function Mapa() {
     const location = useLocation();
