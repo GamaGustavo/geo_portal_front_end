@@ -1,9 +1,15 @@
 import style from './FormEnvMap.module.css';
 import NavBar from '../../components/NavBar';
+import FormSwitch from '../../components/FormSwitch';
 import { useState } from 'react';
 import {enviarShapeFile, cadastrarMapa}  from '../../api/GerenciadorReq.js'
+import PropTypes  from 'prop-types'; // ES6
+
+ 
 
 function FormEnvMap() {
+    const [pagina, setPagina] = useState(0);
+
     const [mapa, setMapa] = useState({
         id:null,
         nome: '',
@@ -13,11 +19,19 @@ function FormEnvMap() {
         documento: null,
     });
 
+    const [fim, setFim] = useState(false);
+
      const handleSubmit  = (event) => {
          event.preventDefault();
-         cadastrarMapa(mapa.name);
+         if(fim){
+         cadastrarMapa(mapa.nome);
          enviarShapeFile(mapa.shapFiles);
          alert(JSON.stringify(mapa));
+         }else{
+             const novaPagina = pagina + 1;
+             setPagina(novaPagina);
+             setFim(pagina >= 1);
+         }
      }
 
     const handleChange = (event) => {
@@ -25,38 +39,40 @@ function FormEnvMap() {
         const value = event.target.type === 'file' ? event.target.files[0] : event.target.value;
         setMapa(values => ({...values, [name]: value}));
     } 
+    return <Form fim={fim} pagina={pagina} onSubmit={handleSubmit} onChange={handleChange} setMapa={setMapa} />;
+        
+}
 
 
+
+function Form({onSubmit, fim, setMapa, onChange, pagina}) {
     return (
         <>
             <NavBar/>
             <section className={style.formulario} >
-                <h1>Cadastrar Mapa</h1>
-                <form onSubmit={handleSubmit}>
-                    <label>Nome:
-                        <input type='text' name='nome' value={mapa.nome} onChange={handleChange}/>
-                    </label>
-                    <label>Categoria:
-                        <input type='text' name='categoria' value={mapa.categoria} onChange={handleChange}/>
-                    </label>
-                    <label>Imagem:
-                        <input type='file' name='imagem' value={mapa.imagem } onChange={handleChange}/>
-                    </label>
-                    <label>ShapFiles:
-                        <input type='file' name='shapFiles'  onChange={handleChange}/>
-                    </label>
-                    <label>Documento:
-                        <input type='file' name='Documento' value={mapa.documento } onChange={handleChange}/>
-                    </label>
+               <form onSubmit={onSubmit}>
+                   <FormSwitch onChange={onChange} pagina={pagina} />
                     <div className={style.botoes}>
-                        <button onClick={()=> setMapa({})} name='cancelar'>Cancelar</button>
-                        <input type='submit' value='Enviar'/>
+                        <button onClick={()=> setMapa({})}   name='cancelar'>Cancelar</button>
+                        {fim ? <input type='submit' value='Enviar'/> : <input type='submit' value='Proxímo'/>}
                     </div>    
                 </form>
                 </section>
         </>
     );
-    
+
 }
 
-export default FormEnvMap;
+Form.propTypes ={
+    onSubmit: PropTypes.func.isRequired,
+    fim: PropTypes.bool.isRequired,
+    setMapa: PropTypes.func,
+    onChange: PropTypes.func.isRequired,
+    pagina: PropTypes.number.isRequired,
+}
+
+
+
+
+
+    export default FormEnvMap;
