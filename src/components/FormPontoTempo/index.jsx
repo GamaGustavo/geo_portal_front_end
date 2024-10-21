@@ -1,4 +1,4 @@
-import style from './FormPontoTempo.module.css';
+
 import PropTypes from "prop-types";
 
 function FormPontoTempo({onChange}){

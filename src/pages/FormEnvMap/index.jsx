@@ -3,10 +3,9 @@ import NavBar from '../../components/NavBar';
 import FormSwitch from '../../components/FormSwitch';
 import { useState } from 'react';
 import {enviarShapeFile, cadastrarMapa}  from '../../api/GerenciadorReq.js'
-import PropTypes  from 'prop-types'; // ES6
+import PropTypes  from 'prop-types'; 
 
  
-
 function FormEnvMap() {
     const [pagina, setPagina] = useState(0);
 
@@ -21,7 +20,7 @@ function FormEnvMap() {
 
     const [fim, setFim] = useState(false);
 
-     const handleSubmit  = (event) => {
+    const handleSubmit  = (event) => {
          event.preventDefault();
          if(fim){
          cadastrarMapa(mapa.nome);
@@ -44,7 +43,6 @@ function FormEnvMap() {
 }
 
 
-
 function Form({onSubmit, fim, setMapa, onChange, pagina}) {
     return (
         <>
@@ -60,10 +58,9 @@ function Form({onSubmit, fim, setMapa, onChange, pagina}) {
                 </section>
         </>
     );
-
 }
 
-Form.propTypes ={
+Form.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     fim: PropTypes.bool.isRequired,
     setMapa: PropTypes.func,
@@ -71,8 +68,4 @@ Form.propTypes ={
     pagina: PropTypes.number.isRequired,
 }
 
-
-
-
-
-    export default FormEnvMap;
+export default FormEnvMap;
