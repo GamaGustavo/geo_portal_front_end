@@ -1,0 +1,14 @@
+.container button{
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 0.25rem;
+    border: 1px solid #63a4ec ; 
+    color: white;
+    background-color: #63a4ec;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.container button:hover{
+    box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 9px 25px 0 rgba(0,0,0,0.19);
+}
+

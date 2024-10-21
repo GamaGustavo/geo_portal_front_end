@@ -40,6 +40,16 @@ export function enviarShapeFile(shapFile){
     });
 }
 
+export async function listarCategorias() {
+    try{
+        const response = await api.get('/categoria');
+        return response.data;
+    }catch(error){
+        console.error('Erro ao obter a lista de categoria:', error);
+        throw error;
+    }
+}
+
 
 /*function getUrl(path) {
     return `${BASE_URL}${path}`;
