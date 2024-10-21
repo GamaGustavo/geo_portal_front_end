@@ -50,6 +50,17 @@ export async function listarCategorias() {
     }
 }
 
+export async function cadastrarCategoria(categoria){
+    try{ 
+        const response = await api.post(`/categoria`,categoria);
+        categoria.id = response.data;
+        console.log(categoria);
+        return categoria;
+    }catch(err){
+        console.error('falha no cadastro: ', err)
+        throw err;
+    }
+}
 
 /*function getUrl(path) {
     return `${BASE_URL}${path}`;
