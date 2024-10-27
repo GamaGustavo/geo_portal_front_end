@@ -13,7 +13,7 @@ import VectorLayer from 'ol/layer/Vector';
 
 function Mapa() {
     const location = useLocation();
-    const { mapa } = location.state || {};
+    const {mapa} = location.state || {};
 
     useEffect(() => {
         const osmLayer = new TileLayer({
@@ -21,16 +21,19 @@ function Mapa() {
             source: new OSM(),
         });
 
+
         const vectorSource = new VectorSource({
             format: new GeoJSON(),
-            url:'http://localhost:8080/geoserver/geo_portal_wk/ows?service=WFS&version=1.3.0&request=GetFeature&typeName=geo_portal_wk%3ASE_Municipios&maxFeatures=50&outputFormat=application%2Fjson',
-          //  projection: 'EPSG:3857',
-           // strategy: bboxStrategy,
+            url: 'http://localhost:8080/geoserver/geo_portal_wk/ows?service=WFS&version=1.3.0&request=GetFeature&typeName=geo_portal_wk%3ASE_Municipios&maxFeatures=50&outputFormat=application%2Fjson',
+            //  projection: 'EPSG:3857',
+            // strategy: bboxStrategy,
         });
 
+
+
         vectorSource.getFeatures().forEach(feature => {
-    console.log(feature.getGeometry().getExtent());
-});
+            console.log(feature.getGeometry().getExtent());
+        });
 
         const vectorLayer = new VectorLayer({
             source: vectorSource,
