@@ -1,0 +1,39 @@
+.container {
+    padding-inline: 172px;
+    padding-top: 4rem;
+}
+
+.botoes {
+    padding-inline: 172px;
+    display: flex;
+    justify-content: end;
+}
+
+.botao {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-left: 32px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    background-color: #63a4ec;
+    border: 1px solid #63a4ec;
+    padding: 0.25rem;
+}
+
+
+.cancelar:hover {
+    background-color: red;
+    border-color: red;
+}
+
+.enviar:hover {
+    background-color: green;
+    border-color: green;
+}
+
+.movimentacao:hover {
+    background-color: #385f8a;
+    border-color: #385f8a;
+
+}

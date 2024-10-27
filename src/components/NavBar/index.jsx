@@ -7,7 +7,7 @@ function NavBar() {
         <div className={style.header}>
             <nav className={style.navbar}>
                 <Link className={style.link} to='/perfil'><FaUser className={style.img} /></Link>
-                <Link className={style.link} to='/'><MdHome className={style.img}/></Link>
+                <Link className={style.link} to='/home'><MdHome className={style.img}/></Link>
                 <Link className={style.link} to='/linha_tempo'><MdViewCarousel className={style.img}/></Link>
                 <Link className={style.link} to='/cadastro_mapa'><FaPlus className={style.img}/></Link>
                 <Link className={style.link} to='/categoria'><MdLabel className={style.img}/></Link>
