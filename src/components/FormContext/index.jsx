@@ -8,7 +8,7 @@ const FormProvider = ({children}) => {
         id: null,
         nome: '',
         imafgem: '',
-        listPontoTempo: [],
+        listPontoTempo: [{id: null, nome: '', data: new Date().toISOString().split('T')[0], listaShapeFile: []}],
         listarCategorias: [],
     });
 

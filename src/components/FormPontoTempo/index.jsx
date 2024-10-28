@@ -1,41 +1,74 @@
-import {useEffect, useState} from 'react';
+import { useState} from 'react';
 import style from './FormPontoTempo.module.css';
-import FileUploadForm from '../../components/FileUploadForm';
 import {useFormContext} from '../FormContext/useFormContext';
 
 function FormPontoTempo() {
 
+
     const {formData, updateFormData} = useFormContext();
     const [pontoTempo, setPontoTempo] = useState(formData.listPontoTempo[0]);
+
+      // Atualiza campos de texto (`nome` e `data`) no estado e no contexto
     const handleOnChange = (event) => {
-        event.preventDefault();
-        const {name, value} = event.target;
-        setPontoTempo((prevPontoTempo) => ({
-            ...prevPontoTempo,
-            [name]: value
-        }));
+        const { name, value } = event.target;
+        const updatedPontoTempo = {
+            ...pontoTempo,
+            [name]: value,
+        };
+        
+        // Atualiza o estado local e o contexto
+        setPontoTempo(updatedPontoTempo);
+        updateFormData('listPontoTempo', [updatedPontoTempo]);
+    };
 
-        updateFormData('listPontoTempo', [{...pontoTempo, [name]: value}]);
-    }
 
-    useEffect(() => {
-        if (formData.listPontoTempo.length == 0){
-            const list = [{nome: '', data: new Date().toISOString().split('T')[0], listaShapeFile: []}];
-            updateFormData('listPontoTempo', list);
-        }
-    });
+    // Atualiza os arquivos de `listaShapeFile`
+    const handleOnChangeFile = (event) => {
+        const selectedFiles = Array.from(event.target.files);
+        const updatedPontoTempo = {
+            ...pontoTempo,
+            listaShapeFile: [...pontoTempo.listaShapeFile, ...selectedFiles],
+        };
+        
+        // Atualiza o estado local e o contexto
+        setPontoTempo(updatedPontoTempo);
+        updateFormData('listPontoTempo', [updatedPontoTempo]);
+    };
 
     return (<>
-        <h1>Cadastrar Ponto Tempo</h1>
-        <label className={style.label}>
-            Nome:
-            <input className={style.input} type='text' value={pontoTempo.nome} required={true} name='nome' onChange={handleOnChange} />
-        </label>
-        <label className={style.label}>
-            Data:
-            <input className={style.input_date} type='date' value={pontoTempo.data} required={true} name='data' onChange={handleOnChange} />
-        </label>
-        <FileUploadForm />
+         <h1>Cadastrar Ponto Tempo</h1>
+            <label className={style.label}>
+                Nome:
+                <input
+                    className={style.input}
+                    type='text'
+                    value={pontoTempo.nome}
+                    required
+                    name='nome'
+                    onChange={handleOnChange}
+                />
+            </label>
+            <label className={style.label}>
+                Data:
+                <input
+                    className={style.input_date}
+                    type='date'
+                    value={pontoTempo.data}
+                    required
+                    name='data'
+                    onChange={handleOnChange}
+                />
+            </label>
+            <label className={style.label}>
+                Upload de Arquivos:
+                <input
+                    className={style.input_file}
+                    type='file'
+                    name='shapeFile'
+                    onChange={handleOnChangeFile}
+                    multiple
+                />
+            </label>
 
     </>);
 
