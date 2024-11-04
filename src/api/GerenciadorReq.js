@@ -1,62 +1,80 @@
 import axios from "axios";
 
-const BASE_URL= 'http://localhost:8090/api/v1';
+const BASE_URL = 'http://localhost:8090/api/v1';
 const api = axios.create({
-    baseURL:BASE_URL,
- });
+    baseURL: BASE_URL,
+});
 
- export function cadastrarMapa(mapa){
-    api.post(`/mapa`,mapa).then((response)=>{
+export async function enviarMapa(mapa) {
+    try {
+        const response = await api.post(`/mapa`, mapa);
         mapa.id = response.data;
-    }).catch((err) => console.log(err.mensage));
-    return mapa;
+        return mapa;
+    } catch (err) {
+        console.error('Erro ao cadastrar o  mapas: ', err);
+        throw err;
+    }
 }
 
-export async function listarMapa(){
-    try{
+export async function listarMapa() {
+    try {
         const response = await api.get('/mapa');
         return response.data;
-    }catch(error){
+    } catch (error) {
         console.error('Erro ao obter a lista de mapas:', error);
         throw error;
     }
 }
 
-export function enviarShapeFile(shapFile){
+export async function enviarShapeFiles(shapeFiles) {
     const formData = new FormData();
-    
-    formData.append('file', shapFile);
 
-    api.post('/shape-file/uploadShapefile', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        }
-    })
-    .then(response => {
-        console.log('Arquivo enviado com sucesso:', response.data);
-    })
-    .catch(error => {
-        console.error('Erro ao enviar o arquivo:', error);
-    });
+    // Adiciona cada arquivo ao FormData com o nome 'file'
+    shapeFiles.forEach((shape) => formData.append('file', shape));
+
+    try {
+        const response = await api.post('/shape-file/cadastrar-shapes', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        // Axios retorna diretamente `response.data`
+        console.log('Upload concluído com sucesso:', response.data);
+        return response.data;  // Retorna `data` para o chamador da função
+    } catch (error) {
+        console.error('Erro no upload:', error);
+        throw error;  // Propaga o erro para ser tratado externamente
+    }
 }
-
 export async function listarCategorias() {
-    try{
+    try {
         const response = await api.get('/categoria');
         return response.data;
-    }catch(error){
+    } catch (error) {
         console.error('Erro ao obter a lista de categoria:', error);
         throw error;
     }
 }
 
-export async function cadastrarCategoria(categoria){
-    try{ 
-        const response = await api.post(`/categoria`,categoria);
+export async function cadastrarCategoria(categoria) {
+    try {
+        const response = await api.post(`/categoria`, categoria);
         categoria.id = response.data;
-        console.log(categoria);
         return categoria;
-    }catch(err){
+    } catch (err) {
+        console.error('falha no cadastro: ', err)
+        throw err;
+    }
+}
+
+export async function enviarPontoTempo(novoPontoTempo) {
+    try {
+        const response = await api.post(`/ponto-tempo`, novoPontoTempo);
+        novoPontoTempo.id = response.data;
+        return novoPontoTempo;
+
+    } catch (err) {
         console.error('falha no cadastro: ', err)
         throw err;
     }

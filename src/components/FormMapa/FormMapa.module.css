@@ -12,6 +12,10 @@
     border-bottom: 3px solid #63a4ec;
     outline: none;
 }
+.select:focus{
+    border: 3px solid #63a4ec;
+}
+
 .label{
     display: flex;
     flex-direction: column;

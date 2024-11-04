@@ -8,9 +8,9 @@ function FormMapa() {
 
     const {formData, updateFormData} = useFormContext();
     const [categoriasSelecionadas, setCategoriasSelecionadas] = useState(formData.listarCategorias.map(cat => ({
-                label: cat.nome,
-                value: cat.id,
-            })));
+        label: cat.nome,
+        value: cat.id,
+    })));
     const [categoriasOptions, setCategoriasOptions] = useState([]);
 
     useEffect(() => {
@@ -39,16 +39,16 @@ function FormMapa() {
         <>
             <h1>Cadastrar Mapa</h1>
             <label className={style.label}>Nome:
-                <input className={style.input} type='text' value={formData.nome}  required={true}
-                name='nome' onChange={handleOnChange}  />
+                <input className={style.input} type='text' value={formData.nome} required={true}
+                    name='nome' onChange={handleOnChange} />
             </label>
             <label className={style.label}>
                 Selecione as categorias que se aplicam ao mapa:
-                <Select isMulti options={categoriasOptions} value={categoriasSelecionadas} onChange={handleCategoryChange} />
+                <Select className={style.select} isMulti options={categoriasOptions} value={categoriasSelecionadas} onChange={handleCategoryChange} />
             </label>
             <label className={style.label}>Imagem:
                 <input className={style.inputImage} type='file' name='imagem' onChange={handleOnChange} />
-            </label>
+           </label>
         </>);
 }
 

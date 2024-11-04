@@ -7,7 +7,7 @@ const FormProvider = ({children}) => {
     const [formData, setFormData] = useState({
         id: null,
         nome: '',
-        imafgem: '',
+        imagem: '',
         listPontoTempo: [{id: null, nome: '', data: new Date().toISOString().split('T')[0], listaShapeFile: []}],
         listarCategorias: [],
     });
