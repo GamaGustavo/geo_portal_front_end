@@ -1,19 +1,15 @@
-import {MultiStepForm,FormMapa, FormPontoTempo, Loading, NavBar , useFormContext} from '../../components';
-/*
-import {useFormContext} from '../../components/FormContext/useFormContext.js'
-import MultiStepForm from '../../components/MultiStepForm'
-import FormMapa from '../../components/FormMapa'
-import FormPontoTempo from '../../components/FormPontoTempo'
-import Loading from '../../components/Loading'
-import NavBar from '../../components/NavBar/index.jsx'*/
+import {MultiStepForm,FormMapa, FormPontoTempo, Loading, NavBar , useFormContext, SuccessModal  } from '../../components';
 import {enviarShapeFiles, enviarPontoTempo, enviarMapa} from '../../api/GerenciadorReq.js';
 import {useState} from 'react'
+import {useNavigate} from 'react-router-dom';
 
 
 function FormEnvMap() {
-
+    
     const {formData} = useFormContext()
     const [loading, setLoading] = useState(false);
+    const [sucesso, setSucesso] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -37,12 +33,10 @@ function FormEnvMap() {
                     categorias: formData.categorias,
                     pontoTempos: [pontoT]
                 }
-                enviarMapa(mapa).then((result) => {
+                enviarMapa(mapa).then(() => {
                     setLoading(false);
-                    alert(result);
-
+                    setSucesso(true);
                 })
-
             });
         });
 
@@ -59,6 +53,7 @@ function FormEnvMap() {
         <>
             <NavBar />
             {loading && <Loading />}
+            {sucesso && <SuccessModal onClose={()=> navigate('/home')}/>}
             <MultiStepForm onSubmit={handleSubmit} listaEtapas={listaEtapas} />
         </>
     )
