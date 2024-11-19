@@ -1,17 +1,18 @@
 .container {
-    padding-inline: 172px;
+    padding-left: 172px;
+    margin-right: 35px;
     padding-top: 4rem;
     display: flex;
     flex-direction: column;
-    max-width: 300px;
+    min-width: 350px;
 }
 
 /* The switch - the box around the slider */
 .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 56px;
+    height: 30px;
 
 
 }
@@ -52,8 +53,8 @@
 .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
+    height: 22px;
+    width: 22px;
     left: 4px;
     bottom: 4px;
     background-color: white;

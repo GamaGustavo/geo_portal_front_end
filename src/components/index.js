@@ -11,3 +11,4 @@ export {default as NavBar} from './NavBar';
 export {useFormContext} from './FormContext/useFormContext.js';
 export {default as SuccessModal} from './SuccessModal';
 export {default as BotoesAtivacao} from './BotoesAtivacao';
+export {default as ViewMapa} from './ViewMapa';

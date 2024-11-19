@@ -80,6 +80,16 @@ export async function enviarPontoTempo(novoPontoTempo) {
     }
 }
 
+export async function getLayerByMapa(idMapa){
+    try{
+        const response = await api.get(`/shape-file/geo-json/${idMapa}`)
+        return response.data;
+    }catch(err){
+        console.error('Nenhum Shape ENcontrado para esse mapa', err)
+        throw err
+    }
+}
+
 /*function getUrl(path) {
     return `${BASE_URL}${path}`;
 }*/

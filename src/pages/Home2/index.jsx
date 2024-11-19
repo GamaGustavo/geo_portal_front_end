@@ -1,115 +1,68 @@
-import {useLocation} from 'react-router-dom';
-import style from './Home.module.css';
-import 'ol/ol.css';
-import {useEffect, useState} from 'react';
-import TileLayer from 'ol/layer/Tile';
-import {OSM} from 'ol/source';
-import {Map, View} from 'ol';
-import {fromLonLat} from 'ol/proj';
-import VectorSource from 'ol/source/Vector';
-import {GeoJSON} from 'ol/format';
-import {Style, Stroke, Fill} from 'ol/style';
-import VectorLayer from 'ol/layer/Vector';
-import NavBar from '../../components/NavBar';
-import {BotoesAtivacao} from '../../components';
+import style from './Home.module.css'; import {useEffect, useState} from 'react';
+import {BotoesAtivacao, ViewMapa, NavBar} from '../../components';
 import {listarMapa} from '../../api/GerenciadorReq';
-import {object} from 'prop-types';
+import {GeoJSON} from 'ol/format';
+import VectorSource from 'ol/source/Vector';
+import VectorLayer from 'ol/layer/Vector';
+import {Fill, Stroke, Style} from 'ol/style';
+
+const cores = [
+    {stroke: 'blue', fill: 'rgba(0, 0, 255, 0.2)'},
+    {stroke: 'red', fill: 'rgba(255, 0, 0, 0.2)'},
+    {stroke: 'green', fill: 'rgba(0, 255, 0, 0.2)'},
+    {stroke: 'purple', fill: 'rgba(128, 0, 128, 0.2)'},
+    // Adicione mais cores aqui, se necessário.
+];
 
 function Home2() {
-    const location = useLocation();
     const [mapas, setMapas] = useState([]);
-
+    const [layers, setLayers] = useState([]);
 
     useEffect(() => {
-        listarMapa().then(
-            (valor) => {
-                const mapaExibicao = valor.map((object) => (
-                    {
-                        titulo: object.nome,
-                        onSelect: () => alert('App funcionado')
+        listarMapa().then((valor) => {
+            const mapaExibicao = valor.map((object, index) => ({
+                titulo: object.nome,
+                handlerOnChange: (ativado) => {
+                    const layerExistente = layers.find((l) => l.id === object.id);
+                    const colorIndex = index % cores.length;
+                    if (ativado && !layerExistente) {
+                        console.log('entrei')
+                        const vectorSource = new VectorSource({
+                            format: new GeoJSON(),
+                            url: `http://localhost:8090/api/v1/shape-file/geo-json/${object.id}`,
+                        });
+                        const novaLayer = new VectorLayer({
+                            source: vectorSource,
+                            style: new Style({
+                                stroke: new Stroke({
+                                    color: cores[colorIndex].stroke,
+                                    width: 2,
+                                }),
+                                fill: new Fill({
+                                    color: cores[colorIndex].fill,
+                                }),
+                            })
+                        });
+                        novaLayer.id = object.id;
+                        setLayers([...layers, novaLayer]);
+                    } else if (!ativado && layerExistente) {
+                        console.log("saida")
+                        setLayers(layers.filter((l) => l.id !== object.id));
                     }
-                ));
-                setMapas(mapaExibicao);
-            }
-        );
+                },
+            }));
 
-
-
-        /*
-        const osmLayer = new TileLayer({
-            preload: Infinity,
-            source: new OSM(),
+            setMapas(mapaExibicao);
         });
-    
-    
-        const vectorSource = new VectorSource({
-            format: new GeoJSON(),
-            url: 'http://localhost:8080/geoserver/geo_portal_wk/ows?service=WFS&version=1.3.0&request=GetFeature&typeName=geo_portal_wk%3AGEOFT_TERRA_PUBLICA&maxFeatures=50&outputFormat=application%2Fjson',
-        });
-    
-        const vectorSource2 = new VectorSource({
-            format: new GeoJSON(),
-            url: 'http://localhost:8080/geoserver/geo_portal_wk/ows?service=WFS&version=1.3.0&request=GetFeature&typeName=geo_portal_wk%3AMineria%C3%A7%C3%A3o%20Ilegal&maxFeatures=50&outputFormat=application%2Fjson',
-        });
-    
-    
-        vectorSource.getFeatures().forEach(feature => {
-            console.log(feature.getGeometry().getExtent());
-        });
-    
-        const vectorLayer = new VectorLayer({
-            source: vectorSource,
-            style: new Style({
-                stroke: new Stroke({
-                    color: 'blue',
-                    width: 2,
-                }),
-                fill: new Fill({
-                    color: 'rgba(0, 0, 255, 0.2 )',
-                }),
-            }),
-        });
-    
-        const vectorLayer2 = new VectorLayer({
-            source: vectorSource2,
-            style: new Style({
-                stroke: new Stroke({
-                    color: 'red',
-                    width: 2,
-                }),
-                fill: new Fill({
-                    color: 'rgba(255, 0,0 , 0.2 )',
-                }),
-            }),
-        });
-    
-    
-        const map = new Map({
-            target: 'map',
-            layers: [osmLayer, vectorLayer, vectorLayer2], // Adicione vectorLayer aqui
-            view: new View({
-                center: fromLonLat([-47.9292, -15.7801]),
-                zoom: 5,
-            }),
-        });
-        
-        return () => map.setTarget(null);*/
-    }, []);
+    });
 
 
 
     return (
-        <div>
+        <div className={style.container}>
             <NavBar />
             <BotoesAtivacao botoes={mapas} />
-            {/*<section className={style.barraLateral}>
-                <ListaComBotoes/>
-            </section> 
-            <section className={style.viewMapa}>
-                <div className={style.pontoTempo}></div>
-                <div id='map' className={style.map}></div>
-            </section>*/}
-
+            <ViewMapa layers={layers} />
         </div>
 
     );
@@ -117,28 +70,5 @@ function Home2() {
 
 export default Home2;
 
-const ListaComBotoes = () => {
-    const [visibilidade, setVisibilidade] = useState([false, false, false]); // Estado inicial de visibilidade para 3 itens
 
-    // Função para alternar a visibilidade do item com base no índice
-    const toggleVisibilidade = (index) => {
-        setVisibilidade(prevState =>
-            prevState.map((item, i) => (i === index ? !item : item))
-        );
-    };
-
-    return (
-        <div>
-            <h3>Lista com Botões para Alternar Visibilidade</h3>
-            {['Item 1', 'Item 2', 'Item 3'].map((item, index) => (
-                <div key={index}>
-                    <button onClick={() => toggleVisibilidade(index)}>
-                        {visibilidade[index] ? 'Esconder' : 'Mostrar'} {item}
-                    </button>
-                    {visibilidade[index] && <p>{item} está visível!</p>}
-                </div>
-            ))}
-        </div>
-    );
-};
 
