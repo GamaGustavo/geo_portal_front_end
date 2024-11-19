@@ -59,6 +59,11 @@ function FormPontoTempo() {
                     onChange={handleOnChange}
                 />
             </label>
+        <label className={style.label}>
+            Descrição:
+            <textarea value={pontoTempo.descricao} name='descricao' onChange={handleOnChange} rows={4} maxLength={1000}  ></textarea>
+
+        </label>
             <label className={style.label}>
                 Upload de Arquivos:
                 <input
