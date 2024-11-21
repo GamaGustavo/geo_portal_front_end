@@ -22,7 +22,7 @@ function ViewMapa({layers}) {
     useEffect(() => {
             const map = new Map({
             target: 'map',
-            layers: [getBacGround(BACKGROUND_TYPES.ESRI_DARK_GRAY), ...layers], // Adicione vectorLayer aqui
+            layers: [getBacGround(BACKGROUND_TYPES.GOOGLE_SATELLITE), ...layers], // Adicione vectorLayer aqui
             view: new View({
                 center: fromLonLat([-47.9292, -15.7801]),
                 zoom: 5,

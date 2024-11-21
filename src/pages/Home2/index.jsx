@@ -26,7 +26,6 @@ function Home2() {
                     const layerExistente = layers.find((l) => l.id === object.id);
                     const colorIndex = index % cores.length;
                     if (ativado && !layerExistente) {
-                        console.log('entrei')
                         const vectorSource = new VectorSource({
                             format: new GeoJSON(),
                             url: `http://localhost:8090/api/v1/shape-file/geo-json/${object.id}`,
