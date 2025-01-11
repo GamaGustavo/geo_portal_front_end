@@ -5,3 +5,64 @@
     width: 100%;
     border: 1px solid #ccc;
 }
+
+.tile_button {
+    position: fixed;
+    display: inline-block;
+    top: 40px;
+    right: 160px;
+    z-index: 1;
+    box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 9px 25px 0 rgba(0,0,0,0.19);
+
+}
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.opcoes {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.img{
+    height: 50px;
+    width: 50px;
+}
+
+.opcoes a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dopcoes a:hover {background-color: #f1f1f1}
+
+.tile_button:hover .opcoes {
+  display: block;
+}
+
+.tile_button:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+.opcoes a {
+    color: black;
+    padding: 11px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.opcoes a:hover {
+    background-color: #f1f1f1
+}
+
